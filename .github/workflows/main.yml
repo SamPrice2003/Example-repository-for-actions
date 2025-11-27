@@ -7,14 +7,25 @@ on:
   
 # what it does
 jobs: 
-  example:
-    name: "Example job" # formal name
-    runs-on: "ubuntu-latest" # what vm shall it use
-    steps: # what specifically to do (Basically shell commands)
-      - name: "Setp 1"
-        run: echo "hi!" # runs this basic shell command
-      - name: "Step 2"
-        run: echo "Hi again!"
+  quality_check:
+    name: "Quality Check"
+    runs-on: "ubuntu-latest"
+    steps:
+      # get access to repo code
+      - name: "Get repo"
+        uses: actions/checkout@v6 # use built in existing action to get the repo 
+        
+      # install python
+      - name: "Install Python"
+        uses: actions/setup-python@v6
+      
+      # install all relevant libraries
+      - name: "Install libraries"
+        run: pip install -r requirements.txt
+      
+      # run pytest/pylint
+      - name: "Run tests"
+        run: pytest 
        
       
       
